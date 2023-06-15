@@ -6,56 +6,48 @@
 --}
 
 function avaliar_estado(grade, simbolo_desejado)
-	--verificando as linhas
+	-- verificar as diagonais da esquerda para a direita
 	local contador = 0
+
 	for i=1, 3 do 
-		contador = 0
+		contador = 0 
 		for j=1, 3 do 
-			if grade[i][j] == simbolo_desejado then 
+			if Grade[j][i] == simbolo_desejado then 
 				contador = contador + 1 
 			end 
-			if contador == 3 then 
+			if contador == 3 then
 				return true 
 			end 
 		end 
 	end
 
-	--verificando as colunas 
+	contador = 0 
+
 	for i=1, 3 do 
-		contador = 0
-		for j=1, 3 do 
-			if grade[j][i] == simbolo_desejado then 
-				contador = contador + 1 
-			end 
-			if contador == 3 then 
-				return true 
-			end 
-		end 
-	end
-	--verificar as diagonais da esquerda para direita  
-	contador = 0
-	for i=1, 3 do 
-		if grade[i][i] == simbolo_desejado then 
-			contador = contador + 1 
-		end 
+	    if grade[i][i] == simbolo_desejado then 
+	        contador = contador + 1 
+	    end 
 	end
 
 	if contador == 3 then 
+	    return true 
 	end 
 
+
+	-- verificar as diagonais da direita para a esquerda  
 	contador = 0
-	--verificar as diagonais da direita para a esquerda  
 	for i=1, 3 do 
-		if grade[4-i][i] == simbolo_desejado then 
-			contador = contador + 1 
-		end 
+	    if grade[4-i][i] == simbolo_desejado then 
+	        contador = contador + 1 
+	    end 
 	end
 
 	if contador == 3 then 
-		return true 
-	end  
-end 
+	    return true 
+	end 
 
+	return false  -- Nenhuma condição de vitória foi atendidend 
+end 
 
 function contar_pecas_livres(_grade)
 	local contador = 0
@@ -69,6 +61,14 @@ function contar_pecas_livres(_grade)
 	return contador 
 end
 
+
+function imprimir_grade(_grade)
+	print("=============") 
+	for i=1, 3 do		
+		print(_grade[i][1], _grade[i][2], _grade[i][3])
+	end
+	print("=============")
+end 
 
 function copiar_grade(_grade)
 	local copia = {
@@ -109,11 +109,11 @@ function minimax(_grade, simbolo, nivel)
 				copia_grade = copiar_grade(_grade)
 				copia_grade[i][j] = simbolo
 				if nivel % 2 == 0 then 
-				--maximizar o nível da IA
-					return math.max(minimax(copia_grade, '2', nivel+1), minimax(copia_grade, '1', nivel+2))
+				    -- maximizar a IA
+				    return math.min(minimax(copia_grade, '2', nivel+1), minimax(copia_grade, '1', nivel+1))
 				else 
-				--minimizar o jogador 
-					return math.min(minimax(copia_grade, '1', nivel+1), minimax(copia_grade, '2', nivel+2))
+				    -- minimizar o jogador
+				    return math.max(minimax(copia_grade, '2', nivel+1), minimax(copia_grade, '1', nivel+1))
 				end
 			end
 		end 
@@ -133,8 +133,10 @@ function melhor_jogada(_grade)
 				--copiar a grade
 				local copia_grade = copiar_grade(_grade)
 				local pontos = minimax(copia_grade, ia, 1)
+				print(pontos)
 				_grade[i][j] = '0'
-				
+				imprimir_grade(_grade)
+		
 				if pontos > melhor_pontuacao then 
 					melhor_pontuacao = pontos
 					jogada.i = i 

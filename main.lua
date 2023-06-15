@@ -116,7 +116,7 @@ function love.load()
 	offset = 10 
 	for i=0, 2 do 
 		for j=0, 2 do 
-			Celulas[#Celulas + 1] = Celula((Dimensao.x + offset)*i, (Dimensao.y + offset) * j,  Dimensao.x, Dimensao.y, i+1, j+1, 3)
+			Celulas[#Celulas + 1] = Celula((Dimensao.x + offset)*j, (Dimensao.y + offset) * i,  Dimensao.x, Dimensao.y, i+1, j+1, 3)
 		end
 	end 
 	
