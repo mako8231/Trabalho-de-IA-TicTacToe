@@ -5,6 +5,7 @@
 --	{'0', '0', '0'}
 --}
 
+--Checar a condição de vitória de cada jogador 
 function avaliar_estado(grade, simbolo_desejado)
 	-- verificar as diagonais da esquerda para a direita
 	local contador = 0

@@ -1,3 +1,4 @@
+--tirar o antialiasing para preservar os pixels 
 love.graphics.setDefaultFilter("nearest", "nearest")
 	
 Object = require("classic")
@@ -5,10 +6,13 @@ Celula = require("celula")
 Botao = require("botao")
 
 --botoes herdados 
+--Orientação a objetos 
 BotaoReset = require("botao_reset")
 BotaoPVP = require("botao_pvp")
 BotaoIA = require("botao_ia")
 
+--X = 1 
+--O = 2 
 jogadores = {'1', '2'}
 --variaveis de controle
 jogador_atual = 1 
@@ -20,12 +24,14 @@ modo_jogo = 0
 --verificando se o jogo ainda está rodando 
 em_jogo = true 
 
+--Grade do jogo da velha 
 Grade = {
 	{'0', '0', '0'},
 	{'0', '0', '0'},
 	{'0', '0', '0'}
 }
 
+--Dimensão do tamanho do sprite (com escala 3 já que é pixel art e naturalmente é pequeno)
 Dimensao = {x=32 * 3, y=32 * 3}
 Celulas = {}
 
@@ -37,6 +43,7 @@ icon_pvp = love.graphics.newImage("assets/pvp.png")
 icon_reset = love.graphics.newImage("assets/reset.png")
 icon_ai = love.graphics.newImage("assets/ai.png")
 
+--Limpar a grade do jogo da velha, deixando os espaços vazios 
 function limpar_grade()
  	for i=1, 3 do 
 		for j=1, 3 do 
@@ -45,7 +52,7 @@ function limpar_grade()
 	end
 end
 
-
+--Verificar se há um jogador vencedor, verificação de estados 
 function checar_tabuleiro()
 	--verificando as linhas
 	local contador = 0
@@ -106,13 +113,16 @@ function checar_tabuleiro()
 	end  
 end 	
 	
+--carregando as classes dentro do código base 
 function love.load()
-	
+	--Botão de reiniciar o jogo 
 	reset = BotaoReset(0, 320, botao_normal, botao_hover, icon_reset, 2)
+	--botão Jogador VS Jogador 
 	pvp = BotaoPVP(117, 320, botao_normal, botao_hover, icon_pvp, 2)
+	--Botão para a IA 
 	ai = BotaoIA(230, 320, botao_normal, botao_hover, icon_ai, 2)
 
-
+	--Deslocamento em pixels das células dentro da imagem 
 	offset = 10 
 	for i=0, 2 do 
 		for j=0, 2 do 
@@ -124,6 +134,7 @@ function love.load()
 
 end 
 
+--Desenhar os objetos na tela 
 function love.draw()
 	--botao_humano:draw()
 	reset:draw()
@@ -134,6 +145,7 @@ function love.draw()
 	end 
 end 
 
+--Autalizando a lógica do jogo 
 function love.update(dt)
 	--botao_humano:update(dt)
 	--checar se o jogador anterior foi alterado 
@@ -146,6 +158,7 @@ function love.update(dt)
 	end
 end 
 
+--Evento de clique no mouse 
 function love.mousepressed(x, y, button)
 	for _, celula in ipairs(Celulas) do 
 		celula:mousePressed(button)
