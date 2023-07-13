@@ -71,7 +71,7 @@ function Celula.mousePressed(self, button)
 			--logica de atualização da IA 
 			if contar_pecas_livres(Grade) > 0 and em_jogo then
 				print("Turno do computador: ")
-				local jogada = melhor_jogada(Grade)
+				local jogada = melhor_jogada(Grade, dificuldade)
 				print("Computador jogou na posição ".. jogada.i.. ", "..jogada.j)
 				Grade[jogada.i][jogada.j] = '2'
 				print("Checando tabuleiro...")

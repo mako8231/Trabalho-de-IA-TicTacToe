@@ -11,6 +11,10 @@ BotaoReset = require("botao_reset")
 BotaoPVP = require("botao_pvp")
 BotaoIA = require("botao_ia")
 
+BotaoEasy = require("botao_easy")
+BotaoMedium = require("botao_medium")
+BotaoHard = require("botao_hard")
+
 --X = 1 
 --O = 2 
 jogadores = {'1', '2'}
@@ -42,6 +46,15 @@ botao_hover = love.graphics.newImage("assets/botao_hover.png")
 icon_pvp = love.graphics.newImage("assets/pvp.png")
 icon_reset = love.graphics.newImage("assets/reset.png")
 icon_ai = love.graphics.newImage("assets/ai.png")
+
+icon_easy = love.graphics.newImage("assets/easy.png")
+icon_medium = love.graphics.newImage("assets/medium.png")
+icon_hard = love.graphics.newImage("assets/hard.png")
+
+-- 2 = fácil 
+-- 5 = médio 
+-- 999 = difícil 
+dificuldade = 0 
 
 --Limpar a grade do jogo da velha, deixando os espaços vazios 
 function limpar_grade()
@@ -121,6 +134,13 @@ function love.load()
 	pvp = BotaoPVP(117, 320, botao_normal, botao_hover, icon_pvp, 2)
 	--Botão para a IA 
 	ai = BotaoIA(230, 320, botao_normal, botao_hover, icon_ai, 2)
+	--botão para a dificuldade fácil 
+	easy = BotaoEasy(0, 420, botao_normal, botao_hover, icon_easy, 2)
+	--botão para a dificuldade médio 
+	medium = BotaoMedium(117, 420, botao_normal, botao_hover, icon_medium, 2)
+	--botão para a dificuldade difícil 
+	hard = BotaoHard(230, 420, botao_normal, botao_hover, icon_hard, 2)
+	--Botões de dificuldade
 
 	--Deslocamento em pixels das células dentro da imagem 
 	offset = 10 
@@ -140,6 +160,9 @@ function love.draw()
 	reset:draw()
 	pvp:draw()
 	ai:draw()
+	easy:draw()
+	medium:draw()
+	hard:draw()
 	for _, celula in ipairs(Celulas) do 
 		celula:draw()
 	end 
@@ -152,7 +175,9 @@ function love.update(dt)
 	reset:update(dt)
 	pvp:update(dt)
 	ai:update(dt)
-
+	easy:update()
+	medium:update()
+	hard:update()
 	for _, celula in ipairs(Celulas) do 
 		celula:update(dt)
 	end
@@ -166,5 +191,8 @@ function love.mousepressed(x, y, button)
 	reset:mousePressed(button)
 	pvp:mousePressed(button)
 	ai:mousePressed(button)
+	easy:mousePressed(button)
+	medium:mousePressed(button)
+	hard:mousePressed(button)
 end
 
