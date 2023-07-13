@@ -91,15 +91,15 @@ function minimax(_grade, simbolo, nivel)
 		--se o jogador 1 ganhar, -1 
 		--se o jogador 2 ganhar, 1 
 		--se empatar, 0 
-		local pontos = 0
-		if avaliar_estado(_grade, '2') then 
-			pontos = 1
-		elseif avaliar_estado(_grade, '1') then 
-			pontos = -1 
-		end 
-
-		return pontos 
+		return 0 
+	end 	
+	if avaliar_estado(_grade, '2') then
+	    return 1 
 	end 
+	if avaliar_estado(_grade, '1') then
+	 	return -1
+	end 
+
 
 	for i=1, 3 do
 		for j=1, 3 do 
@@ -110,10 +110,11 @@ function minimax(_grade, simbolo, nivel)
 				copia_grade[i][j] = simbolo
 				if nivel % 2 == 0 then 
 				    -- maximizar a IA
-				    return math.min(minimax(copia_grade, '2', nivel+1), minimax(copia_grade, '1', nivel+1))
+				    local melhor_pontuacao = -10000
+				    return math.max(melhor_pontuacao, minimax(copia_grade, '2', nivel+1))
 				else 
-				    -- minimizar o jogador
-				    return math.max(minimax(copia_grade, '2', nivel+1), minimax(copia_grade, '1', nivel+1))
+					local melhor_pontuacao = 10000
+				    return math.min(melhor_pontuacao, minimax(copia_grade, '1', nivel+1))		
 				end
 			end
 		end 
