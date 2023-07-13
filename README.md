@@ -338,3 +338,34 @@ if maximizer then
 		return math.min(melhor_pontuacao, minimax(copia_grade, '1', nivel+1, max_nivel, tem_limite, false))		
 end
 ```
+
+Cálculo da pontuação da jogada:
+```lua
+--dentro da função minmax, condição de parada 
+	if tem_limite then 
+		if nivel >= max_nivel then  
+			if fim_de_jogo(_grade) or contar_pecas_livres(_grade) == 0  then
+				print("SCORE: ", retornar_score(_grade) )
+				imprimir_grade(_grade) 
+				return retornar_score(_grade)
+			else
+				print("SCORE: ", 0 )
+				imprimir_grade(_grade) 
+				return 0
+			end 
+		end
+	else
+
+--retornar_score:
+function retornar_score(_grade)
+	local score = 0 
+ 	if avaliar_estado(_grade, '2') then
+	   	score = 1 
+	elseif avaliar_estado(_grade, '1') then
+	 	score = -1
+	end 
+	return score 
+end 
+```
+
+

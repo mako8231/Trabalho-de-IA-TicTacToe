@@ -98,7 +98,7 @@ function retornar_score(_grade)
 end 
 
 function fim_de_jogo(_grade)
-	return avaliar_estado(_grade, '1') or avaliar_estado(_grade, '2') --or (contar_pecas_livres(_grade) == 0) 
+	return avaliar_estado(_grade, '1') or avaliar_estado(_grade, '2')  
 end 
 
 
